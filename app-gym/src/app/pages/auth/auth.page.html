@@ -2,4 +2,12 @@
 <!-- Enviamos el parámetro para el título -->
 <app-header title="Login"></app-header>
 <ion-content>
+
+    <form [formGroup]="form">
+        <!-- Enviamos parámetros y conectamos el parámetro "form" con el formulario -->
+        <app-custom-input icon="mail-outline" type="email" autocomplete="email" [control]="form.controls.email" label="Correo"></app-custom-input>
+        <!-- <app-custom-input icon="key-outline" type="password"></app-custom-input> -->
+    </form>
+
+
 </ion-content>
