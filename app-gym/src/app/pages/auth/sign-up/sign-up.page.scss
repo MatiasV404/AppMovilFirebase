@@ -1,0 +1,61 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+ion-card-title{
+    padding-bottom: 30px;
+    font-weight: bold;
+}
+
+ion-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    border-radius: 8%;
+}
+
+.validators{
+    padding-top: 5px;
+}
+
+.container-forgot-psswd{
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-forgot-psswd p:hover{
+    color: whitesmoke;
+    transition: all 0.2s ease;
+    scale: 1.02;
+}
+
+img {
+    max-width: 150px;
+    max-height: 150px;
+}
+
+.submit{
+    padding-bottom: 10px;
+}
+
+.titulo, .titulo strong{
+    margin:0px;
+    font-size: 40px;
+    font-family: 'Bebas Neue', sans-serif !important;
+}
+
+// Fondo
+.main {
+    background-image: radial-gradient(#ce2c2c 0.5px, transparent 0.5px), radial-gradient(#ce2c2c 0.5px, transparent 0.5px);
+    background-size: 13px 13px;
+    background-position: 0 0, 6.5px 6.5px;
+    background-color: #000000;
+}

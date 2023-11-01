@@ -1,13 +1,52 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>sign-up</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">sign-up</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<!-- Corresponde al selector del componente header de la carpeta shared -->
+<!-- Enviamos el parámetro para el título -->
+<app-header title="FitPlan Pro"></app-header>
+<ion-content>
+  <div class="main">
+    <ion-card>
+      <ion-card-title>Registrarse</ion-card-title>
+      <hr>
+      <img src="../../../assets/icon/logo-red.png" alt="">
+      <p class="titulo"><strong>FitPlan</strong> Pro</p>
+      <ion-card-content>
+        <form [formGroup]="form" (ngSubmit)="submit()" (keypress.enter)="submit()">
+          <!-- Enviamos parámetros y conectamos el parámetro "form" con el formulario -->
+          <!-- input name -->
+          <app-custom-input icon="person-outline" type="text" autocomplete="name" [control]="form.controls.name"
+            label="Nombre"></app-custom-input>
+          <!-- Errores name-->
+          <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.touched">
+            <!-- Se debe indicar qué tipo de error es -->
+            <div *ngIf="form.controls.name.errors?.['required']">El nombre es requerido</div>
+            <div *ngIf="form.controls.name.errors?.['minlength']">El nombre debe contener al menos 4 caracteres</div>
+          </div>
+          <!-- input email -->
+          <app-custom-input icon="mail-outline" type="email" autocomplete="email" [control]="form.controls.email"
+            label="Correo"></app-custom-input>
+          <!-- Errores email-->
+          <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.touched">
+            <!-- Se debe indicar qué tipo de error es -->
+            <div *ngIf="form.controls.email.errors?.['required']">El correo es requerido</div>
+            <div *ngIf="form.controls.email.errors?.['email']">Ingrese un correo válido</div>
+          </div>
+          <!-- input password -->
+          <app-custom-input icon="key-outline" type="password" [control]="form.controls.password"
+            label="Contraseña"></app-custom-input>
+          <!-- Errores password-->
+          <div class="validators" *ngIf="form.controls.password.errors && form.controls.password.touched">
+            <div *ngIf="form.controls.password.errors?.['required']">La contraseña es requerida</div>
+          </div>
+          <!-- Olvido de contraseña -->
+          <div class="container-forgot-psswd">
+          </div>
+          <!-- Botón registrar -->
+          <!-- Si el formulario es inválido, se deshabilita el botón -->
+          <ion-button expand="block" mode="ios" class="submit" type="submit" [disabled]="form.invalid">
+            Registrarse
+            <ion-icon slot="end" name="person-add-outline"></ion-icon>
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
