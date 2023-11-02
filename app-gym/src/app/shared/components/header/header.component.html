@@ -1,7 +1,13 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button *ngIf="backButton" [defaultHref] = "backButton"></ion-back-button>
+      <!-- Back Button -->
+      <ion-back-button *ngIf="backButton" [defaultHref]="backButton"></ion-back-button>
+      
+      <!-- Cerrar modal -->
+      <ion-button *ngIf="isModal" (click)="dismissModal()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <!-- Se indica la variable "title" -->
     <ion-title>{{ title }}</ion-title>

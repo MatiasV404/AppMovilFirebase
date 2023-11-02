@@ -1,0 +1,43 @@
+<app-header [isModal]="true" title="Agregar producto"></app-header>
+<ion-content>
+    <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()" (keypress.enter)="submit()">
+
+        <!-- Enviamos parámetros y conectamos el parámetro "form" con el formulario -->
+        <!-- input name -->
+        <app-custom-input type="text" autocomplete="name" [control]="form.controls.name"
+          label="Nombre"></app-custom-input>
+        <!-- Errores name-->
+        <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.touched">
+          <!-- Se debe indicar qué tipo de error es -->
+          <div *ngIf="form.controls.name.errors?.['required']">El nombre es requerido</div>
+          <div *ngIf="form.controls.name.errors?.['minlength']">El nombre debe contener al menos 4 caracteres</div>
+        </div>
+
+        <!-- input price -->
+        <app-custom-input type="number" [control]="form.controls.price"
+          label="Precio"></app-custom-input>
+        <!-- Errores price-->
+        <div class="validators" *ngIf="form.controls.price.errors && form.controls.price.touched">
+          <!-- Se debe indicar qué tipo de error es -->
+          <div *ngIf="form.controls.price.errors?.['required']">Este campo es requerido</div>
+          <div *ngIf="form.controls.price.errors?.['min']">El precio mínimo debe ser 0</div>
+        </div>
+
+        <!-- input unidades vendidas -->
+        <app-custom-input type="number" [control]="form.controls.soldUnits"
+          label="Unidades vendidas"></app-custom-input>
+        <!-- Errores unidades vendidas-->
+        <div class="validators" *ngIf="form.controls.soldUnits.errors && form.controls.soldUnits.touched">
+          <!-- Se debe indicar qué tipo de error es -->
+          <div *ngIf="form.controls.soldUnits.errors?.['required']">Este campo es requerido</div>
+          <div *ngIf="form.controls.soldUnits.errors?.['min']">La cantidad mínima debe ser 0</div>
+        </div>
+
+        <!-- Botón Agregar producto -->
+        <!-- Si el formulario es inválido, se deshabilita el botón -->
+        <ion-button mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid">
+          Agregar producto
+          <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+        </ion-button>
+      </form>
+</ion-content>

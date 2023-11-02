@@ -4,6 +4,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { CustomInputComponent } from './components/custom-input/custom-input.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddUpdateProductComponent } from './components/add-update-product/add-update-product.component';
 
 
 
@@ -11,11 +12,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     HeaderComponent,
     CustomInputComponent,
+    AddUpdateProductComponent
   ],
   exports: [
     HeaderComponent,
     CustomInputComponent,
     ReactiveFormsModule,
+    AddUpdateProductComponent
+
   ],
   imports: [
     CommonModule,
