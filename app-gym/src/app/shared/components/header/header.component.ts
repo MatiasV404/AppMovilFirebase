@@ -9,6 +9,8 @@ export class HeaderComponent  implements OnInit {
 
   // Creamos un código reutilizable
   @Input() title!:string;
+  @Input() backButton!:string;
+
 
   constructor() { }
 

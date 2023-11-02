@@ -33,8 +33,53 @@ export class AuthPage implements OnInit {
       await loading.present();
 
       this.firebaseSvc.singIn(this.form.value as User).then(res => {
-        console.log(res);
+
+        this.getUserInfo(res.user.uid);
         // Capturamos errores
+      }).catch(error => {
+        console.log(error);
+
+        // Mostramos notificación al usuario
+        this.utilsSvc.presentToast({
+          message: 'Correo y/o contraseña inválido(s). Intente nuevamente.',
+          duration: 2500,
+          color: 'secondary',
+          position: 'middle',
+          icon: 'alert-circle-outline'
+        })
+
+        // Quitamos el loading cuando termine la función
+      }).finally(() => {
+        loading.dismiss();
+      })
+    }
+  }
+
+  async getUserInfo(uid: string) {
+    if (this.form.valid) {
+
+      const loading = await this.utilsSvc.loading();
+      await loading.present();
+
+      // Indicamos la ruta de guardado
+      let path = 'users/${uid}'
+
+      this.firebaseSvc.getDocument(path).then((user: User) => {
+
+        this.utilsSvc.saveInLocalStorage('user', user);
+        // Redireccionar a home
+        this.utilsSvc.routerLink('/main/home');
+        // Reseteamos el formulario
+        this.form.reset();
+
+        this.utilsSvc.presentToast({
+          message: `Te damos la bienvenida ${user.name}`,
+          duration: 1500,
+          color: 'primary',
+          position: 'middle',
+          icon: 'person-circle-outline'
+        })
+
       }).catch(error => {
         console.log(error);
 
