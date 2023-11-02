@@ -1,5 +1,44 @@
-<app-header title="Inicio"></app-header>
+<app-header title="Inicio">
+</app-header>
 <ion-content>
+
+  <!-- Lista de productos -->
+  <ion-list>
+    <!-- Creamos ciclo for para recorrer la lista -->
+    <ion-item-sliding *ngFor="let p of products">
+      <ion-item>
+        <ion-avatar>
+          <img [src]="p.image" />
+        </ion-avatar>
+        <ion-label>
+          <div class="name">{{p.name}}</div>
+          <div class="data"><strong>Precio: </strong>{{p.price | currency: 'CLP'}}
+            <br>
+            <strong>Unidades vendidas: </strong>{{p.soldUnits}}
+          </div>
+
+          <ion-chip color="primary" mode="ios" outline="true">
+            <!-- Operación aritmética para calcular ganancia por tipo producto -->
+            <ion-label>Ganancia: {{p.price * p.soldUnits| currency: 'CLP'}}</ion-label>
+          </ion-chip>
+
+        </ion-label>
+      </ion-item>
+      <!-- Opciones ionic -->
+      <ion-item-options>
+
+        <!-- Editar -->
+        <ion-item-option (click)="addUpdateProduct(p)">
+          <ion-icon name="create-outline"></ion-icon>
+        </ion-item-option>
+        <!-- Borrar -->
+        <ion-item-option color="danger">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-item-option>
+
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 
   <!-- Nuevo producto -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

@@ -35,7 +35,7 @@ export class SignUpPage implements OnInit {
       const loading = await this.utilsSvc.loading();
       await loading.present();
 
-      this.firebaseSvc.singUp(this.form.value as User).then(async res => {
+      this.firebaseSvc.signUp(this.form.value as User).then(async res => {
         // Actualizamos el usuario
         await this.firebaseSvc.updateUser(this.form.value.name);
 
