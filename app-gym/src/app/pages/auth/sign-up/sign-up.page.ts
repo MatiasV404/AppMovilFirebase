@@ -12,7 +12,8 @@ import { UtilsService } from 'src/app/services/utils.service';
 
 export class SignUpPage implements OnInit {
 
-    form = new FormGroup({
+  form = new FormGroup({
+    uid: new FormControl(''),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required, Validators.minLength(4)]),
@@ -36,9 +37,53 @@ export class SignUpPage implements OnInit {
 
       this.firebaseSvc.singUp(this.form.value as User).then(async res => {
         // Actualizamos el usuario
-        await this.firebaseSvc.updateUser(this.form.value.name)
-        console.log(res);
+        await this.firebaseSvc.updateUser(this.form.value.name);
+
+        let uid = res.user.uid;
+        this.form.controls.uid.setValue(uid);
+
+        this.setUserInfo(uid);
+
         // Capturamos errores
+      }).catch(error => {
+        console.log(error);
+
+        // Mostramos notificación al usuario
+        this.utilsSvc.presentToast({
+          message: 'Correo y/o contraseña inválido(s). Intente nuevamente.',
+          duration: 2500,
+          color: 'primary',
+          position: 'middle',
+          icon: 'alert-circle-outline'
+        })
+
+        // Quitamos el loading cuando termine la función
+      }).finally(() => {
+        loading.dismiss();
+      })
+    }
+  }
+
+  // Función asíncrona
+  async setUserInfo(uid: string) {
+    if (this.form.valid) {
+
+      const loading = await this.utilsSvc.loading();
+      await loading.present();
+
+      // Indicamos la ruta de guardado
+      let path = 'users/${uid}'
+      // Borrar contraseña de la base de datos
+      delete this.form.value.password;
+
+      this.firebaseSvc.setDocument(path, this.form.value).then(async res => {
+
+        this.utilsSvc.saveInLocalStorage('user', this.form.value);
+        // Redireccionar a home
+        this.utilsSvc.routerLink('/main/home');
+        // Reseteamos el formulario
+        this.form.reset();
+
       }).catch(error => {
         console.log(error);
 
