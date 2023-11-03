@@ -32,7 +32,7 @@
           <ion-icon name="create-outline"></ion-icon>
         </ion-item-option>
         <!-- Borrar -->
-        <ion-item-option color="danger">
+        <ion-item-option color="danger" (click)="confirmDeleteProduct(p)">
           <ion-icon name="trash-outline"></ion-icon>
         </ion-item-option>
 
@@ -44,6 +44,12 @@
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="addUpdateProduct()">
       <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="signOut()">
+      <ion-icon name="close"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
