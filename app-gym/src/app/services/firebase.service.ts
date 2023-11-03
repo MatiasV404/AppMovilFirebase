@@ -3,10 +3,10 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { createUserWithEmailAndPassword, sendPasswordResetEmail, getAuth, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { User } from '../models/user.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore'
-import { getFirestore, setDoc, doc, getDoc, addDoc, collection, updateDoc, collectionData, query } from '@angular/fire/firestore'
+import { getFirestore, deleteDoc, setDoc, doc, getDoc, addDoc, collection, updateDoc, collectionData, query } from '@angular/fire/firestore'
 import { UtilsService } from './utils.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage'
-import { getStorage, uploadString, ref, getDownloadURL } from 'firebase/storage' 
+import { getStorage, uploadString, ref, getDownloadURL, deleteObject } from 'firebase/storage' 
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +69,11 @@ export class FirebaseService {
     return updateDoc(doc(getFirestore(), path), data);
   }
 
+  // Eliminar un documento
+  deleteDocument(path: string) {
+    return deleteDoc(doc(getFirestore(), path));
+  }
+
   // Obtener un documento
   async getDocument(path: string) {
     return (await getDoc(doc(getFirestore(), path))).data();
@@ -91,6 +96,11 @@ export class FirebaseService {
   // Obtener ruta de la imagen con su URL
   async getFilePath(url : string){
     return ref(getStorage(), url).fullPath;
+  }
+
+  // Eliminar archivo
+  deleteFile(path:string){
+    return deleteObject(ref(getStorage(), path))
   }
 
 }
