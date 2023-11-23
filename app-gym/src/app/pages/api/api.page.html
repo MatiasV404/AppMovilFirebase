@@ -1,17 +1,14 @@
 <!-- api.page.html -->
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Ejemplo de API
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header title="API JSONPlaceholder">
+</app-header>
 
 <ion-content>
-  <ion-button (click)="navigateToAuth()">Volver</ion-button>
   <ion-list>
     <ion-item *ngFor="let user of users">
       {{ user.name }}
     </ion-item>
   </ion-list>
+  <div class="btn">
+    <ion-button (click)="navigateToAuth()" slot="">Volver</ion-button>
+  </div>
 </ion-content>
