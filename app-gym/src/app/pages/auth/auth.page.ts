@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -10,6 +11,12 @@ import { UtilsService } from 'src/app/services/utils.service';
   styleUrls: ['./auth.page.scss'],
 })
 export class AuthPage implements OnInit {
+
+  constructor(private router: Router) {}
+
+  navigateToApi() {
+    this.router.navigate(['/api']);
+  }
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),

@@ -14,8 +14,16 @@ const routes: Routes = [
     loadChildren: () => import('./pages/auth/auth.module').then( m => m.AuthPageModule), canActivate : [NoAuthGuard],
   },
   {
+    path: 'api',
+    loadChildren: () => import('./pages/api/api.module').then(m => m.ApiPageModule)
+  },
+  {
     path: 'main',
     loadChildren: () => import('./pages/main/main.module').then( m => m.MainPageModule), canActivate : [AuthGuard],
+  },
+  {
+    path: 'api',
+    loadChildren: () => import('./pages/api/api.module').then( m => m.ApiPageModule)
   },
 ];
 

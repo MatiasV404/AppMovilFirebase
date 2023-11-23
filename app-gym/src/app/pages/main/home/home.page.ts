@@ -20,7 +20,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
   }
 
-  user(): User{
+  user(): User {
     return this.utilsSvc.getFromLocalStorage('user');
   }
 
@@ -29,12 +29,17 @@ export class HomePage implements OnInit {
     this.getProducts();
   }
 
+  // Cerrar sesión
+  signOut(){
+    this.firebaseSvc.signOut();
+  }
+
   // Obtener Productos
-  getProducts(){
+  getProducts() {
     let path = `users/${this.user().uid}/products`
 
     let sub = this.firebaseSvc.getCollectionData(path).subscribe({
-      next:(res: any) => {
+      next: (res: any) => {
         console.log(res);
         this.products = res;
         sub.unsubscribe();
@@ -45,12 +50,75 @@ export class HomePage implements OnInit {
 
   // Agregar o actualizar producto
   async addUpdateProduct(product?: Product) {
-  let success = await this.utilsSvc.presentModal({
+    let success = await this.utilsSvc.presentModal({
       component: AddUpdateProductComponent,
       componentProps: { product }
     })
 
-    if(success) this.getProducts();
+    if (success) this.getProducts();
+  }
+
+  // Confirmar eliminación de producto
+  async confirmDeleteProduct(product: Product) {
+    this.utilsSvc.presentAlert({
+      header: 'Confirmar eliminación',
+      message: '¿Deseas eliminar este producto?',
+      mode: 'ios',
+      buttons: [
+        {
+          text: 'Cancelar'
+        },
+        {
+          text: 'Eliminar',
+          handler: () => {
+            this.deleteProduct(product);
+          }
+        }
+      ]
+    });
+  }
+
+  // Eliminar producto
+  async deleteProduct(product: Product) {
+
+    let path = `users/${this.user().uid}/products/${product.id}`
+
+    const loading = await this.utilsSvc.loading();
+    await loading.present();
+
+    let imagePath = await this.firebaseSvc.getFilePath(product.image);
+    await this.firebaseSvc.deleteFile(imagePath);
+
+    this.firebaseSvc.deleteDocument(path).then(async res => {
+
+      this.products = this.products.filter(p => p.id !== product.id);
+
+      // Mostramos notificación al usuario
+      this.utilsSvc.presentToast({
+        message: 'Producto eliminado exitosamente.',
+        duration: 1500,
+        color: 'success',
+        position: 'middle',
+        icon: 'checkmark-circle-outline'
+      })
+
+      // Capturamos errores
+    }).catch(error => {
+      console.log(error);
+
+      // Mostramos notificación al usuario
+      this.utilsSvc.presentToast({
+        message: 'Correo y/o contraseña inválido(s). Intente nuevamente.',
+        duration: 2500,
+        color: 'primary',
+        position: 'middle',
+        icon: 'alert-circle-outline'
+      })
+
+      // Quitamos el loading cuando termine la función
+    }).finally(() => {
+      loading.dismiss();
+    })
   }
 
 }
